@@ -1,5 +1,5 @@
 class GoodsItem {
-  constructor(title, price) {
+  constructor(title = 'noname', price = 'не указана') {
     this.title = title;
     this.price = price;
   }
@@ -29,6 +29,30 @@ class GoodsList {
     });
     document.querySelector('.goods-list').innerHTML = listHtml;
   }
+}
+
+class Cartlist {
+  constructor() {
+    this.goods = [];
+  }
+  addItem(){
+  }
+  removeItem(){
+  }
+  getItems(){
+  }
+  calculateSum(){
+  }
+  render(){
+  }
+}
+
+class CartItem extends GoodsItem {
+  constructor(title, price) {
+    super(title, price);
+    this.count = 1;
+  }
+
 }
 
 const list = new GoodsList();
