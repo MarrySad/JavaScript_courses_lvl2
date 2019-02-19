@@ -29,7 +29,7 @@ class GoodsList {
     });
     document.querySelector('.goods-list').innerHTML = listHtml;
   }
-  calculateSum(){
+  calculatePrice(){
     return this.goods.reduce((a,b) => a+b.price, 0);
   }
 }
@@ -58,4 +58,4 @@ class CartItem extends GoodsItem {
 const list = new GoodsList();
 list.fetchGoods();
 list.render();
-console.log(list.calculateSum());
+//console.log(list.calculateSum());
