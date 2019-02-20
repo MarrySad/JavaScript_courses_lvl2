@@ -1,6 +1,5 @@
 class Hambuger {
     constructor(values) {
-        console.log(arguments);
         this.size = hamburgerElem.find(item => item.name === values[0]);
         this.stuffing = hamburgerElem.find(item => item.name === values[1]);
         this.topping = [];
