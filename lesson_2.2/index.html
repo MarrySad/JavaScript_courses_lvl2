@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 </head>
+
 <body>
     <main>
-        <form action="main.js">
-            <input type="radio" id="sizeHamberger1" value="big">
-            <label for="sizeHamberger1">Большой</label>
+        <h1>Собираем гпмбургер</h1>
+        <form action="">
+            <h2>Размер гамбургера</h2>
+            <label for="sizeHamberger"><input type="radio" name="sizeHambuger" value="small" checked> Маленький (50 рублей, 20 калорий)</label>
+            <label for="sizeHamberger"><input type="radio" name="sizeHambuger" value="big"> Большой (100 рублей, 40 калорий)</label>
+            <h2>Начинка гамбургера</h2>
+            <label for="stuffing"><input type="radio" name="stuffing" value="cheese" checked> С сыром (+10 рублей, +20 калорий)</label>
+            <label for="stuffing"><input type="radio" name="stuffing" value="salad"> С салатом (+20 рублей, +5 калорий)</label>
+            <label for="stuffing"><input type="radio" name="stuffing" value="potatoes"> С картофелем (+15 рублей, +10 калорий)</label>
+            <h2>Топпинги</h2>
+            <label for="topping1"><input type="checkbox" name="spice" id="topping1" value="spice"> посыпать приправой (+15 рублей, +0 калорий)</label>
+            <label for="topping2"><input type="checkbox" name="mayo" id="topping2" value="mayo"> полить майонезом (+20 рублей, +5 калорий)</label>
+            <input type="submit" value="Submit">
         </form>
+        <div class="output"></div>
+
     </main>
 </body>
+
 </html>

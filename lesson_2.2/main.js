@@ -1,11 +1,11 @@
 class Hambuger {
-    constructor() {
+    constructor(values) {
         console.log(arguments);
-        this.size = hamburgerElem.find(item => item.name === arguments[0]);
-        this.stuffing = hamburgerElem.find(item => item.name === arguments[1]);
+        this.size = hamburgerElem.find(item => item.name === values[0]);
+        this.stuffing = hamburgerElem.find(item => item.name === values[1]);
         this.topping = [];
-        for (let i = 2; i < arguments.length; i++) {
-            this.topping.push(hamburgerElem.find(item => item.name === arguments[i]))
+        for (let i = 2; i < values.length; i++) {
+            this.topping.push(hamburgerElem.find(item => item.name === values[i]))
         }
     }
 
@@ -29,6 +29,21 @@ let hamburgerElem = [
     { name: 'mayo', price: 20, calories: 5 },
 ]
 
-let qwe = new Hambuger('big', 'salad', 'spice', 'mayo')
-console.log(qwe.calculateCalories());
+
+
+var form = document.querySelector("form");
+var log = document.querySelector(".output");
+
+form.addEventListener("submit", function (event) {
+    var data = new FormData(form);
+    var values = [];
+    for (const entry of data) {
+        values.push(entry[1]);
+    };
+    let hambuger = new Hambuger(values);
+    log.innerText = `Стоимость: ${hambuger.calculatePrice()} рублей. Энергетическая ценность: ${hambuger.calculateCalories()} каллорий`;
+    event.preventDefault();
+}, false);
+
+
 
