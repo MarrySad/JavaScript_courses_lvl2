@@ -1,0 +1,27 @@
+header {
+    border: solid 1px black;
+    padding: 10px 20px;
+    text-align: end
+}
+
+.cart-button {
+    border: solid 1px black;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+}
+
+main {
+    padding: 20px;
+}
+
+.goods-list {
+    display: flex;
+    justify-content: space-around;
+}
+
+.goods-item {
+    border: solid 1px black;
+    padding: 9px;
+}
