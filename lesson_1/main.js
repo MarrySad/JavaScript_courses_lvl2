@@ -42,11 +42,12 @@ class GoodsList {
 }
 
 class Cartlist extends GoodsList {
-  addItem() {
+  addItem(id_product) {
   }
-  removeItem() {
+  removeItem(id_product) {
   }
   getItems() {
+    
   }
   calculateSum() {
   }
@@ -70,7 +71,6 @@ function makeGETRequest(url) {
     } else if (window.ActiveXObject) {
       xhr = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    console.log(xhr.readyState);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         resole(xhr.responseText);
@@ -86,5 +86,8 @@ list.fetchGoods().then((a) => {
   console.log(a)
 });
 console.log(list);
+
+let cartlist = new Cartlist();
+cartlist.addItem(123);
 
 
