@@ -29,21 +29,21 @@ class GoodsList {
     });
     document.querySelector('.goods-list').innerHTML = listHtml;
   }
-  calculatePrice(){
-    return this.goods.reduce((a,b) => a+b.price, 0);
+  calculatePrice() {
+    return this.goods.reduce((a, b) => a + b.price, 0);
   }
 }
 
-class Cartlist extends GoodsList{
-  addItem(){
+class Cartlist extends GoodsList {
+  addItem() {
   }
-  removeItem(){
+  removeItem() {
   }
-  getItems(){
+  getItems() {
   }
-  calculateSum(){
+  calculateSum() {
   }
-  render(){
+  render() {
   }
 }
 
@@ -52,10 +52,9 @@ class CartItem extends GoodsItem {
     super(title, price);
     this.count = 1;
   }
-
 }
 
 const list = new GoodsList();
 list.fetchGoods();
 list.render();
-//console.log(list.calculateSum());
+
