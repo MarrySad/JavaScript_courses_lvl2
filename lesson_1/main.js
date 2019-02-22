@@ -1,11 +1,12 @@
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
 class GoodsItem {
   constructor(title = 'noname', price = 'не указана') {
-    this.title = title;
+    this.product_name = title;
     this.price = price;
   }
   render() {
-    return `<div
-class="goods-item"><h3> ${ this.title} </h3><p> ${this.price} </p></div>`;
+    return `<div class="goods-item"><h3> ${this.product_name} </h3><p> ${this.price} </p></div>`;
   }
 }
 
@@ -13,37 +14,43 @@ class GoodsList {
   constructor() {
     this.goods = [];
   }
+
+
   fetchGoods() {
-    this.goods = [
-      { title: 'Shirt', price: 150 },
-      { title: 'Socks', price: 50 },
-      { title: 'Jacket', price: 350 },
-      { title: 'Shoes', price: 250 },
-    ];
+    return new Promise((resolte, reject) => {
+      makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
+        this.goods = JSON.parse(goods)
+        console.log(this);
+      });
+    })
   }
+
   render() {
+    console.log(this.goods);
     let listHtml = '';
     this.goods.forEach(good => {
-      const goodItem = new GoodsItem(good.title, good.price);
+      console.log(good.product_name);
+      const goodItem = new GoodsItem(good.product_name, good.price);
       listHtml += goodItem.render();
     });
     document.querySelector('.goods-list').innerHTML = listHtml;
   }
-  calculatePrice(){
-    return this.goods.reduce((a,b) => a+b.price, 0);
+
+  calculatePrice() {
+    return this.goods.reduce((a, b) => a + b.price, 0);
   }
 }
 
-class Cartlist extends GoodsList{
-  addItem(){
+class Cartlist extends GoodsList {
+  addItem() {
   }
-  removeItem(){
+  removeItem() {
   }
-  getItems(){
+  getItems() {
   }
-  calculateSum(){
+  calculateSum() {
   }
-  render(){
+  render() {
   }
 }
 
@@ -55,7 +62,29 @@ class CartItem extends GoodsItem {
 
 }
 
+function makeGETRequest(url) {
+  return new Promise((resole, reject) => {
+    var xhr;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+      xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    console.log(xhr.readyState);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        resole(xhr.responseText);
+      }
+    }
+    xhr.open('GET', url, true);
+    xhr.send();
+  })
+}
+
 const list = new GoodsList();
-list.fetchGoods();
-list.render();
-//console.log(list.calculateSum());
+list.fetchGoods().then((a) => {
+  console.log(a)
+});
+console.log(list);
+
+
