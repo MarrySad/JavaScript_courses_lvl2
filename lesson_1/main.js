@@ -47,7 +47,6 @@ class Cartlist extends GoodsList {
   removeItem(id_product) {
   }
   getItems() {
-    
   }
   calculateSum() {
   }
@@ -60,7 +59,6 @@ class CartItem extends GoodsItem {
     super(title, price);
     this.count = 1;
   }
-
 }
 
 function makeGETRequest(url) {
