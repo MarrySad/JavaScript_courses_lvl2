@@ -15,21 +15,27 @@ class GoodsList {
     this.goods = [];
   }
 
+  // fetchGoods(cb) {
+  //   makeGETRequest(`${API_URL}/catalogData.json`).then( (goods) => {
+  //     this.goods = JSON.parse(goods);
+  //     cb();
+  //   })
+  //   .catch( () =>  console.log('Error'))
+  // }
 
   fetchGoods() {
-    return new Promise((resolte, reject) => {
-      makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
-        this.goods = JSON.parse(goods)
-        console.log(this);
-      });
+    return new Promise( (resolte, reject) => {
+      makeGETRequest(`${API_URL}/catalogData.json`).then( (goods) => {
+        this.goods = JSON.parse(goods);
+      })
+      .catch( () =>  console.log('Error'))
     })
-  }
+    
+  } 
 
   render() {
-    console.log(this.goods);
     let listHtml = '';
     this.goods.forEach(good => {
-      console.log(good.product_name);
       const goodItem = new GoodsItem(good.product_name, good.price);
       listHtml += goodItem.render();
     });
@@ -71,6 +77,9 @@ function makeGETRequest(url) {
     }
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
+        if (xhr.status !== 200) {
+          reject(xhr.responseText);
+        }
         resole(xhr.responseText);
       }
     }
@@ -80,10 +89,9 @@ function makeGETRequest(url) {
 }
 
 const list = new GoodsList();
-list.fetchGoods().then((a) => {
-  console.log(a)
-});
-console.log(list);
+list.fetchGoods(() => {
+  list.render();
+  })
 
 let cartlist = new Cartlist();
 cartlist.addItem(123);
