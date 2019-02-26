@@ -16,7 +16,7 @@ main {
     padding: 20px;
 }
 
-.goods-list {
+.goods-list, .cart-list {
     display: flex;
     justify-content: space-around;
 }

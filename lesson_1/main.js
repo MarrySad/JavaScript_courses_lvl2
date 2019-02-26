@@ -15,24 +15,15 @@ class GoodsList {
     this.goods = [];
   }
 
-  // fetchGoods(cb) {
-  //   makeGETRequest(`${API_URL}/catalogData.json`).then( (goods) => {
-  //     this.goods = JSON.parse(goods);
-  //     cb();
-  //   })
-  //   .catch( () =>  console.log('Error'))
-  // }
-
   fetchGoods() {
-    return new Promise( (resolte, reject) => {
-      makeGETRequest(`${API_URL}/catalogData.json`).then( (goods) => {
+    return new Promise((resolte, reject) => {
+      makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
         this.goods = JSON.parse(goods);
         resolte();
       })
-      .catch( () =>  console.log('Error'))
+        .catch(() => console.log('Error'))
     })
-    
-  } 
+  }
 
   render() {
     let listHtml = '';
@@ -49,15 +40,46 @@ class GoodsList {
 }
 
 class Cartlist extends GoodsList {
+  constructor() {
+    super();
+    this.totalPrise = 0;
+    this.countGoods = 0;
+  }
   addItem(id_product) {
+    var str_json;
+    list.goods.forEach((good) => {
+      if (good.id_product = id_product) {
+        str_json = JSON.stringify(good);
+      }
+    })
+    makeGETRequest(`${API_URL}/addToBasket.json`, str_json);
   }
   removeItem(id_product) {
   }
-  getItems() {
+
+  fetchCartGoods() {
+    return new Promise((resolte, reject) => {
+      makeGETRequest(`${API_URL}/getBasket.json`).then((goods) => {
+        console.log(goods);
+        const data = JSON.parse(goods);
+        this.goods = data.contents;
+        this.totalPrise = data.amount;
+        this.countGoods = data.countGoods;
+        resolte();
+      })
+        .catch(() => console.log('Error'))
+    })
   }
+
   calculateSum() {
   }
   render() {
+    let listHtml = '';
+    this.goods.forEach(good => {
+      const goodItem = new GoodsItem(good.product_name, good.price);
+      listHtml += goodItem.render();
+    });
+    document.querySelector('.cart-list').innerHTML = listHtml;
   }
 }
 
@@ -76,6 +98,7 @@ function makeGETRequest(url) {
     } else if (window.ActiveXObject) {
       xhr = new ActiveXObject("Microsoft.XMLHTTP");
     }
+    console.log(xhr.readyState)
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status !== 200) {
@@ -85,7 +108,7 @@ function makeGETRequest(url) {
       }
     }
     xhr.open('GET', url, true);
-    xhr.send();
+    xhr.send(arguments[1]);
   })
 }
 
@@ -93,6 +116,8 @@ const list = new GoodsList();
 list.fetchGoods().then(() => list.render());
 
 let cartlist = new Cartlist();
+cartlist.fetchCartGoods().then(() => cartlist.render());
 cartlist.addItem(123);
+
 
 
