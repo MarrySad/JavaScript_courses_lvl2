@@ -27,6 +27,7 @@ class GoodsList {
     return new Promise( (resolte, reject) => {
       makeGETRequest(`${API_URL}/catalogData.json`).then( (goods) => {
         this.goods = JSON.parse(goods);
+        resolte();
       })
       .catch( () =>  console.log('Error'))
     })
@@ -89,9 +90,7 @@ function makeGETRequest(url) {
 }
 
 const list = new GoodsList();
-list.fetchGoods(() => {
-  list.render();
-  })
+list.fetchGoods().then(() => list.render());
 
 let cartlist = new Cartlist();
 cartlist.addItem(123);
