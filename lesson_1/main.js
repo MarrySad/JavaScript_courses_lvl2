@@ -113,13 +113,13 @@ class Basket extends GoodsList {
   }
 }
 
-class CartItem extends GoodsItem {
-  constructor(id_product, title, price) {
-    super(title, price);
-    this.id_product = id_product;
-    this.count = 1;
-  }
-}
+// class CartItem extends GoodsItem {
+//   constructor(id_product, title, price) {
+//     super(title, price);
+//     this.id_product = id_product;
+//     this.count = 1;
+//   }
+// }
 
 function makeGETRequest(url) {
   return new Promise((resole, reject) => {
