@@ -7,15 +7,12 @@ class Hambuger {
             this.topping.push(hamburgerElem.find(item => item.name === values[i]))
         }
     }
-
     calculatePrice() {
         return this.size.price + this.stuffing.price + this.topping.reduce((a, b) => a + b.price, 0);
     }
     calculateCalories() {
         return this.size.calories + this.stuffing.calories + this.topping.reduce((a, b) => a + b.calories, 0);
     }
-
-
 }
 
 let hamburgerElem = [
@@ -27,8 +24,6 @@ let hamburgerElem = [
     { name: 'spice', price: 15, calories: 0 },
     { name: 'mayo', price: 20, calories: 5 },
 ]
-
-
 
 var form = document.querySelector("form");
 var log = document.querySelector(".output");
