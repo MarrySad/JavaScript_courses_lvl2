@@ -19,6 +19,6 @@ form.addEventListener("submit", (event) => {
             event.preventDefault();
             break;
         }
-        inputs[i].style.outlineColor = 'inherit'
+        inputs[i].style.outlineColor = ''
     }
 })
