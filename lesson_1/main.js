@@ -104,7 +104,7 @@ class Basket extends GoodsList {
   render() {
     this.listHtml = '';
     this.goods.forEach(good => {
-      const goodItem = new GoodsItem(good.product_name, good.price);
+      const goodItem = new CartItem(good.product_name, good.price);
       this.listHtml += goodItem.render();
     });
     this.listHtml += `<div class='cart-price'>Сумма корзины: ${this.totalPrice}</div>`;
@@ -113,13 +113,12 @@ class Basket extends GoodsList {
   }
 }
 
-// class CartItem extends GoodsItem {
-//   constructor(id_product, title, price) {
-//     super(title, price);
-//     this.id_product = id_product;
-//     this.count = 1;
-//   }
-// }
+class CartItem extends GoodsItem {
+  constructor(title, price) {
+    super(title, price);
+    this.count = 1;
+  }
+}
 
 function makeGETRequest(url) {
   return new Promise((resole, reject) => {
