@@ -6,7 +6,7 @@ class GoodsItem {
     this.price = price;
   }
   render() {
-    return `<div class="goods-item"><h3> ${this.product_name} </h3><p> ${this.price} </p></div>`;
+    return `<div class="good-item"><h3> ${this.product_name} </h3><p> ${this.price} </p></div>`;
   }
 }
 
@@ -101,7 +101,7 @@ class Basket extends GoodsList {
         str_json = JSON.stringify(good);
       }
     })
-    makeGETRequest(`${API_URL}/addToBasket.json`, str_json).then((response) => {
+    makeGETRequest(`${API_URL}/deleteFromBasket.json`, str_json).then((response) => {
       if (JSON.parse(response).result === 1) {
         const indexToDelete = this.goods.findIndex((item) => item.id_product === id_product);
         this.render()
@@ -149,18 +149,56 @@ function makeGETRequest(url) {
   })
 }
 
-const catalog = new Catalog();
-catalog.fetchGoods().then(() => catalog.render());
+// const catalog = new Catalog();
+// catalog.fetchGoods().then(() => catalog.render());
 
 const basket = new Basket();
 basket.fetchGoods().then(() => {
   basket.render();
-  basket.addGood(123);
-  basket.addGood(456);
-  basket.removeGood(123);
+  // basket.addGood(123);
+  // basket.addGood(456);
+  // basket.removeGood(123);
 });
 
 searchButton.addEventListener('click', (e) => {
   const value = searchInput.value;
   catalog.filterGoods(value);
 });
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    goods: [],
+    filteredGoods: [],
+    searchLine: ''
+  },
+  methods: {
+    makeGETRequest(url) {
+      return new Promise((resole, reject) => {
+        var xhr;
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status !== 200) {
+              reject(xhr.responseText);
+            }
+            resole(xhr.responseText);
+          }
+        }
+        xhr.open('GET', url, true);
+        xhr.send();
+      })
+    }
+  },
+  mounted() {
+    this.makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
+      this.goods = JSON.parse(goods);
+      this.filteredGoods = JSON.parse(goods);
+    });
+  }
+});
+

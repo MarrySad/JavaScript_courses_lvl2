@@ -22,7 +22,7 @@ main {
     justify-content: space-around;
 }
 
-.goods-item {
+.good-item {
     border: solid 1px black;
     margin: 10px;
     padding: 9px;

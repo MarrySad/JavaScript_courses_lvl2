@@ -2,26 +2,34 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js" defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="vue.min.js"></script>
+  <script src="main.js" defer></script>
 </head>
 
 <body>
+  <div id="app">
     <header>
-        <input type="text" class="goods-search" id="searchInput"/>
-        <button class="search-button" type="button" id="searchButton">Искать</button>
-        <button class="cart-button" type="button">Корзина</button>
-      </header>
-      <main>
-        <h2>Корзина</h2>
-        <div class="cart-list"></div>
-        <h2>Каталог</h2>
-        <div class="goods-list"></div>
-      </main>
+      <input type="text" class="goods-search" id="searchInput" />
+      <button class="search-button" type="button" id="searchButton">Искать</button>
+      <button class="cart-button" type="button">Корзина</button>
+    </header>
+    <main>
+      <h2>Корзина</h2>
+      <div class="cart-list"></div>
+      <h2>Каталог</h2>
+      <div class="goods-list">
+        <div class="good-item" v-for="good in filteredGoods">
+          <h3>{{ good.product_name }}</h3>
+          <p>{{ good.price }}</p>
+        </div>
+      </div>
+    </main>
+  </div>
 </body>
 
 </html>
