@@ -160,10 +160,10 @@ basket.fetchGoods().then(() => {
   // basket.removeGood(123);
 });
 
-searchButton.addEventListener('click', (e) => {
-  const value = searchInput.value;
-  catalog.filterGoods(value);
-});
+// searchButton.addEventListener('click', (e) => {
+//   const value = searchInput.value;
+//   catalog.filterGoods(value);
+// });
 
 const app = new Vue({
   el: '#app',
@@ -192,6 +192,13 @@ const app = new Vue({
         xhr.open('GET', url, true);
         xhr.send();
       })
+    },
+    filterGoods(value) {
+      const regexp = new RegExp(value, 'i');
+      this.filteredGoods = this.goods.filter(good => regexp.test(good.product_name));
+    },
+    clickSearch() {
+      this.filterGoods(this.searchLine);
     }
   },
   mounted() {
