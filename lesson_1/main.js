@@ -167,13 +167,25 @@ const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-sto
 
 Vue.component('goods-list', {
   props: ['goods'],
-  template: '<div class="goods-list"><goods-item v-for="good in goods" :good="good"></goods-item></div>',
+  template: '<div class="goods-list"><goods-item v-for="good in goods" :good="good"></goods-item><div class="zaglushka" v-if="goods.length == 0">Нет данных</div></div>',
 });
 
 Vue.component('goods-item', {
   props: ['good'],
   template: '<div class="good-item"><h3>{{ good.product_name }}</h3><p>{{ good.price }}</p></div>'
 });
+
+Vue.component('cart-list', {
+  props: ['goods'],
+  template: '<div class="cart-list" ><h2>Корзина</h2><cart-item v-for="good in goods" :good="good"></cart-item></div>'
+})
+
+Vue.component('cart-item', {
+  props: ['good'],
+  template: '<div class="cart-item"><span class="name"></span><span class="price"></span><span class="count"></span></div><div class="total-info"><p class="total-price"></p><p class="count-goods"></p></div>'
+})
+
+
 
 const app = new Vue({
   el: '#app',
@@ -210,6 +222,9 @@ const app = new Vue({
     },
     clickSearch() {
       this.filterGoods(this.searchLine);
+    },
+    isVisibleCartSwap() {
+      this.isVisibleCart = !this.isVisibleCart;
     }
   },
   mounted() {
