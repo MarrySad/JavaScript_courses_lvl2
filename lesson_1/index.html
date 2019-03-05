@@ -30,13 +30,9 @@
         </div>
       </div>
       <h2>Каталог</h2>
-      <div class="goods-list">
-        <div class="zaglushka" v-if="filteredGoods.length == 0">Нет данных</div>
-        <div class="good-item" v-for="good in filteredGoods">
-          <h3>{{ good.product_name }}</h3>
-          <p>{{ good.price }}</p>
+      <goods-list :goods="filteredGoods"></goods-list>
+      <div class="zaglushka" v-if="filteredGoods.length == 0">Нет данных</div>
         </div>
-      </div>
     </main>
   </div>
 </body>

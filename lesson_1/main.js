@@ -165,6 +165,16 @@ const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-sto
 // //   catalog.filterGoods(value);
 // // });
 
+Vue.component('goods-list', {
+  props: ['goods'],
+  template: '<div class="goods-list"><goods-item v-for="good in goods" :good="good"></goods-item></div>',
+});
+
+Vue.component('goods-item', {
+  props: ['good'],
+  template: '<div class="good-item"><h3>{{ good.product_name }}</h3><p>{{ good.price }}</p></div>'
+});
+
 const app = new Vue({
   el: '#app',
   data: {
