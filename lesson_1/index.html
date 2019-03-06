@@ -14,8 +14,9 @@
 <body>
   <div id="app">
     <header>
-      <input type="text" class="goods-search" id="searchInput" v-model="searchLine" />
-      <button class="search-button" type="button" id="searchButton" @click="clickSearch">Искать</button>
+      <!-- <input type="text" class="goods-search" id="searchInput" v-model="searchLine" />
+      <button class="search-button" type="button" id="searchButton" @click="clickSearch">Искать</button> -->
+      <search-block v-on:ololo="clickSearch" v-model="searchLine"></search-block>
       <button class="cart-button" type="button" @click="isVisibleCartSwap">Корзина</button>
     </header>
     <main>
