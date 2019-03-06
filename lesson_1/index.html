@@ -14,16 +14,14 @@
 <body>
   <div id="app">
     <header>
-      <!-- <input type="text" class="goods-search" id="searchInput" v-model="searchLine" />
-      <button class="search-button" type="button" id="searchButton" @click="clickSearch">Искать</button> -->
       <search-block v-on:ololo="clickSearch" v-model="searchLine"></search-block>
       <button class="cart-button" type="button" @click="isVisibleCartSwap">Корзина</button>
     </header>
     <main>
       <cart-list v-if="isVisibleCart"></cart-list>
       <h2>Каталог</h2>
-      <goods-list :goods="filteredGoods"></goods-list>
-        </div>
+      <goods-list v-if="connected" :goods="filteredGoods"></goods-list>
+      <error-massage v-if="!connected"></error-massage>
     </main>
   </div>
 </body>
