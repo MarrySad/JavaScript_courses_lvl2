@@ -1,4 +1,5 @@
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API_URL_LOCAL = 'http://127.0.0.1:3000'
 //   calculatePrice() {
 //     return this.goods.reduce((a, b) => a + b.price, 0);
 //   }
@@ -51,7 +52,7 @@ Vue.component('goods-item', {
     <button type="button" value="{{ good.id_product }}">Добавить</button>\
   </div>',
   methods: {
-    
+
   }
 });
 
@@ -118,19 +119,42 @@ const app = new Vue({
         xhr.send();
       })
     },
+    
+    makePOSTRequest(url, data) {
+      let xhr;
+      if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+      } else if (window.ActiveXObject) {
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status !== 200) {
+            reject(xhr.responseText);
+          }
+          resole(xhr.responseText);
+        }
+      }
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      xhr.send(data);
+    },
+
     filterGoods(value) {
       const regexp = new RegExp(value, 'i');
       this.filteredGoods = this.goods.filter(good => regexp.test(good.product_name));
     },
+
     clickSearch: function () {
       this.filterGoods(this.searchLine);
     },
+
     isVisibleCartSwap() {
       this.isVisibleCart = !this.isVisibleCart;
     }
   },
   mounted() {
-    this.makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
+    this.makeGETRequest(`${API_URL_LOCAL}/catalogData.json`).then((goods) => {
       this.connected = true;
       this.goods = JSON.parse(goods);
       this.filteredGoods = JSON.parse(goods);
