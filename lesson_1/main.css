@@ -38,3 +38,11 @@ main {
     font-size: 28px;
     text-align: center;
 }
+
+.search-block {
+    display: inline;
+}
+
+.title {
+    width: 100%;
+}

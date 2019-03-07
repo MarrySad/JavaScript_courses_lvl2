@@ -54,7 +54,7 @@ Vue.component('goods-item', {
 Vue.component('cart-list', {
   props: ['goods'],
   template: '<div class="cart-list" >\
-  <h2>Корзина</h2>\
+  <h2 class="title">Корзина</h2>\
   <cart-item v-for="good in goods" :good="good"></cart-item>\
   </div>'
 })
@@ -71,8 +71,8 @@ Vue.component('cart-item', {
 })
 
 Vue.component('search-block', {
-  props: ['value'],
-  template: '<div>\
+  props: ['value', 'clickSearch'],
+  template: '<div class="search-block">\
   <input type="text" class="goods-search" id="searchInput" :value="value" v-on:input="$emit(\'input\', $event.target.value)"/>\
   <button class="search-button" type="button" id="searchButton" v-on:click="$emit(\'ololo\')">Искать</button>\
   </div>'
@@ -117,8 +117,7 @@ const app = new Vue({
       this.filteredGoods = this.goods.filter(good => regexp.test(good.product_name));
     },
     clickSearch: function () {
-      console.log('fwefs'),
-        this.filterGoods(this.searchLine);
+      this.filterGoods(this.searchLine);
     },
     isVisibleCartSwap() {
       this.isVisibleCart = !this.isVisibleCart;
