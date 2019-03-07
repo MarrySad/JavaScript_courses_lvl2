@@ -48,7 +48,11 @@ Vue.component('goods-item', {
   template: '<div class="good-item">\
     <h3>{{ good.product_name }}</h3>\
     <p>{{ good.price }}</p>\
-  </div>'
+    <button type="button" value="{{ good.id_product }}">Добавить</button>\
+  </div>',
+  methods: {
+    
+  }
 });
 
 Vue.component('cart-list', {
@@ -67,6 +71,7 @@ Vue.component('cart-item', {
     </span></div><div class="total-info">\
     <p class="total-price"></p>\
     <p class="count-goods"></p>\
+    <button type="button" value="{{ good.id_product }}">Удалить</button>\
   </div>'
 })
 
@@ -87,6 +92,7 @@ const app = new Vue({
   data: {
     goods: [],
     filteredGoods: [],
+    basket: [],
     searchLine: '',
     isVisibleCart: false,
     connected: true
