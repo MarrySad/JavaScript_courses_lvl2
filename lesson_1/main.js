@@ -154,7 +154,7 @@ const app = new Vue({
     }
   },
   mounted() {
-    this.makeGETRequest(`${API_URL_LOCAL}/catalogData.json`).then((goods) => {
+    this.makeGETRequest(`${API_URL_LOCAL}/catalogData`).then((goods) => {
       this.connected = true;
       this.goods = JSON.parse(goods);
       this.filteredGoods = JSON.parse(goods);

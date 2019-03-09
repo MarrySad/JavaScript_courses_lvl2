@@ -8,6 +8,7 @@ app.use(express.static('.'));
 app.use(bodyParser.json()); // Указываем, что содержимое - JSON
 
 app.get('/catalogData', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     fs.readFile('catalog.json', (err, data) => {
         res.send(data);
     })
