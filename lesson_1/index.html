@@ -18,7 +18,7 @@
       <button class="cart-button" type="button" @click="isVisibleCartSwap">Корзина</button>
     </header>
     <main>
-      <cart-list v-if="isVisibleCart"></cart-list>
+      <cart-list v-if="isVisibleCart" :goods="basket"></cart-list>
       <h2>Каталог</h2>
       <goods-list v-if="connected" :goods="filteredGoods"></goods-list>
       <error-massage v-if="!connected"></error-massage>

@@ -52,7 +52,6 @@ Vue.component('goods-item', {
     <button type="button" value="{{ good.id_product }}">Добавить</button>\
   </div>',
   methods: {
-
   }
 });
 
@@ -101,7 +100,7 @@ const app = new Vue({
   methods: {
     makeGETRequest(url) {
       return new Promise((resole, reject) => {
-        var xhr;
+        let xhr;
         if (window.XMLHttpRequest) {
           xhr = new XMLHttpRequest();
         } else if (window.ActiveXObject) {
