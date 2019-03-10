@@ -4,10 +4,10 @@ header {
     text-align: end
 }
 
-.cart-button, .search-button {
+button {
     border: solid 1px black;
     border-radius: 10px;
-    background-color: transparent;
+    background-color: white;
     outline: none;
     cursor: pointer;
 }
@@ -30,6 +30,11 @@ main {
 .cart-item {
     display: flex;
     justify-content: space-between;
+    padding: 2px;
+}
+
+.cart-item:nth-child(2n) {
+    background-color: #e8d6e8;
 }
 
 .good-item {
