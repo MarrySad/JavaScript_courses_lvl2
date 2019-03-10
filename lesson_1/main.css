@@ -16,10 +16,20 @@ main {
     padding: 20px;
 }
 
-.goods-list, .cart-list {
+.goods-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+.cart-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
 }
 
 .good-item {
