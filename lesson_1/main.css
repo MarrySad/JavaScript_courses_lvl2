@@ -61,3 +61,11 @@ main {
 .title {
     width: 100%;
 }
+
+.name {
+    width: 20%;
+}
+
+.price, .count {
+    width: 10%;
+}
