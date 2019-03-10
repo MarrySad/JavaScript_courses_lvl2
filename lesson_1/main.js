@@ -47,7 +47,7 @@ Vue.component('cart-item', {
   template: '<div class="cart-item">\
     <span class="name">{{ good.product_name }}</span>\
     <span class="price">{{ good.price }}</span>\
-    <span class="count"></span>\
+    <span class="count">{{ good.quantity }}</span>\
     <button type="button" value="{{ good }}" @click="deleteFromBasket">Удалить</button>\
   </div>',
   methods: {

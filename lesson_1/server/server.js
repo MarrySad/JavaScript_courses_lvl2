@@ -49,7 +49,18 @@ app.post('/addToCart', (req, res) => {
         const item = req.body;
         addStats('add', item.product_name);
 
-        cart.push(item);
+        let index = cart.findIndex((element, index, array) => {
+            if (element.product_name === item.product_name && element.price === item.price) {
+                element.quantity++;
+                return true;
+            }
+        });
+
+        if (index == -1) {
+            item.quantity = 1;
+            cart.push(item);
+        }
+
 
         fs.writeFile('cart.json', JSON.stringify(cart), (err) => {
             if (err) {
@@ -88,11 +99,16 @@ app.post('/deleteFromBasket', (req, res) => {
         const item = req.body;
         addStats('delete', item.product_name);
 
-        let index = (cart.findIndex((element, index, array) => {
-            if (JSON.stringify(element) === JSON.stringify(item)) return true;
-            else return false;
-        }));
-        cart.splice(index, 1);
+        let index = cart.findIndex((element, index, array) => {
+            if (element.product_name === item.product_name && element.price === item.price) {
+                element.quantity--;
+                return true;
+            }
+        });
+
+        if (cart[index].quantity < 1) {
+            cart.splice(index, 1);
+        }
 
         fs.writeFile('cart.json', JSON.stringify(cart), (err) => {
             if (err) {
