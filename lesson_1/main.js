@@ -1,11 +1,12 @@
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
 class GoodsItem {
   constructor(title = 'noname', price = 'не указана') {
-    this.title = title;
+    this.product_name = title;
     this.price = price;
   }
   render() {
-    return `<div
-class="goods-item"><h3> ${ this.title} </h3><p> ${this.price} </p></div>`;
+    return `<div class="goods-item"><h3> ${this.product_name} </h3><p> ${this.price} </p></div>`;
   }
 }
 
@@ -13,18 +14,21 @@ class GoodsList {
   constructor() {
     this.goods = [];
   }
+
   fetchGoods() {
-    this.goods = [
-      { title: 'Shirt', price: 150 },
-      { title: 'Socks', price: 50 },
-      { title: 'Jacket', price: 350 },
-      { title: 'Shoes', price: 250 },
-    ];
+    return new Promise((resolte, reject) => {
+      makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
+        this.goods = JSON.parse(goods);
+        resolte();
+      })
+        .catch(() => console.log('Error'))
+    })
   }
+
   render() {
     let listHtml = '';
     this.goods.forEach(good => {
-      const goodItem = new GoodsItem(good.title, good.price);
+      const goodItem = new GoodsItem(good.product_name, good.price);
       listHtml += goodItem.render();
     });
     document.querySelector('.goods-list').innerHTML = listHtml;
