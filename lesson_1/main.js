@@ -17,10 +17,10 @@ Vue.component('goods-item', {
   template: '<div class="good-item">\
     <h3>{{ good.product_name }}</h3>\
     <p>{{ good.price }}</p>\
-    <button type="button" value="{{ good }}" @click="addGood">Добавить</button>\
+    <button type="button" value="{{ good }}" @click="addToCart">Добавить</button>\
   </div>',
   methods: {
-    addGood() {
+    addToCart() {
       app.makePOSTRequest(`${API_URL_LOCAL}/addToCart`, JSON.stringify(this.good)).then((response) => {
         console.log(response);
       })
@@ -48,10 +48,10 @@ Vue.component('cart-item', {
     <span class="name">{{ good.product_name }}</span>\
     <span class="price">{{ good.price }}</span>\
     <span class="count">{{ good.quantity }}</span>\
-    <button type="button" value="{{ good }}" @click="deleteFromBasket">Удалить</button>\
+    <button type="button" value="{{ good }}" @click="deleteFromCart">Удалить</button>\
   </div>',
   methods: {
-    deleteFromBasket() {
+    deleteFromCart() {
       app.makePOSTRequest(`${API_URL_LOCAL}/deleteFromBasket`, JSON.stringify(this.good)).then((response) => {
         console.log(response);
       })
