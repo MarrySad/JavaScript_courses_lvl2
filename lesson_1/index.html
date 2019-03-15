@@ -14,29 +14,14 @@
 <body>
   <div id="app">
     <header>
-      <input type="text" class="goods-search" id="searchInput" v-model="searchLine" />
-      <button class="search-button" type="button" id="searchButton" @click="clickSearch">Искать</button>
-      <button class="cart-button" type="button">Корзина</button>
+      <search-block v-on:ololo="clickSearch" v-model="searchLine"></search-block>
+      <button class="cart-button" type="button" @click="isVisibleCartSwap">Корзина</button>
     </header>
     <main>
-      <div class="cart-list" v-if="isVisibleCart">
-        <h2>Корзина</h2>
-        <div class="cart-item">
-          <span class="name"></span><span class="price"></span><span class="count"></span>
-        </div>
-        <div class="total-info">
-          <p class="total-price"></p>
-          <p class="count-goods"></p>
-        </div>
-      </div>
+      <cart-list v-if="isVisibleCart"></cart-list>
       <h2>Каталог</h2>
-      <div class="goods-list">
-        <div class="zaglushka" v-if="filteredGoods.length == 0">Нет данных</div>
-        <div class="good-item" v-for="good in filteredGoods">
-          <h3>{{ good.product_name }}</h3>
-          <p>{{ good.price }}</p>
-        </div>
-      </div>
+      <goods-list v-if="connected" :goods="filteredGoods"></goods-list>
+      <error-massage v-if="!connected"></error-massage>
     </main>
   </div>
 </body>

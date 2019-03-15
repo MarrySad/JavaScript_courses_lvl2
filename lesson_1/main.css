@@ -32,3 +32,17 @@ main {
     flex: 0 0 100%;
     text-align: center;
   }
+
+.error-massage {
+    color: red;
+    font-size: 28px;
+    text-align: center;
+}
+
+.search-block {
+    display: inline;
+}
+
+.title {
+    width: 100%;
+}

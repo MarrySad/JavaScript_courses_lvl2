@@ -1,80 +1,6 @@
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-
-// class GoodsItem {
-//   constructor(title = 'noname', price = 'не указана') {
-//     this.product_name = title;
-//     this.price = price;
-//   }
-//   render() {
-//     return `<div class="good-item"><h3> ${this.product_name} </h3><p> ${this.price} </p></div>`;
-//   }
-// }
-
-// class GoodsList {
-//   constructor(source = '') {
-//     this.goods = [];
-//     this.source = source;
-//     this.listHtml = '';
-//   }
-
-//   applyData(jsonData) {
-//   }
-
-//   fetchGoods() {
-//     return makeGETRequest(`${API_URL}/${this.source}`)
-//       .then((response) => {
-//         this.applyData(JSON.parse(response));
-//       })
-//       .catch((response) => {
-//       })
-//   }
-
-//   render() {
-//   }
-// }
-
-// class Catalog extends GoodsList {
-//   constructor() {
-//     super('catalogData.json');
-//     this.filteredGoods = [];
-//   }
-
 //   calculatePrice() {
 //     return this.goods.reduce((a, b) => a + b.price, 0);
-//   }
-
-//   applyData(jsonData) {
-//     this.goods = jsonData;
-//     this.filteredGoods = jsonData;
-//   }
-
-//   render() {
-//     this.listHtml = '';
-//     this.filteredGoods.forEach(good => {
-//       const goodItem = new GoodsItem(good.product_name, good.price);
-//       this.listHtml += goodItem.render();
-//     });
-//     document.querySelector('.goods-list').innerHTML = this.listHtml;
-//   }
-
-//   filterGoods(value) {
-//     const regexp = new RegExp(value, 'i');
-//     this.filteredGoods = this.goods.filter(good => regexp.test(good.product_name));
-//     this.render();
-//   }
-// }
-
-// class Basket extends GoodsList {
-//   constructor() {
-//     super('getBasket.json');
-//     this.totalPrice = 0;
-//     this.countGoods = 0;
-//   }
-
-//   applyData(jsonData) {
-//     this.goods = jsonData.contents;
-//     this.totalPrice = jsonData.amount;
-//     this.countGoods = jsonData.countGoods;
 //   }
 
 //   addGood(id_product) {
@@ -109,69 +35,67 @@ const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-sto
 //     });
 //   }
 
-//   render() {
-//     this.listHtml = '';
-//     this.goods.forEach(good => {
-//       const goodItem = new CartItem(good.product_name, good.price);
-//       this.listHtml += goodItem.render();
-//     });
-//     this.listHtml += `<div class='cart-price'>Сумма корзины: ${this.totalPrice}</div>`;
-//     this.listHtml += `<div class='cart-count'>Кол-во товаров: ${this.countGoods}</div>`;
-//     document.querySelector('.cart-list').innerHTML = this.listHtml;
-//   }
-// }
+Vue.component('goods-list', {
+  props: ['goods'],
+  template: '<div class="goods-list">\
+    <goods-item v-for="good in goods" :good="good"></goods-item>\
+    <div class="zaglushka" v-if="goods.length == 0">Нет данных</div>\
+  </div>',
+});
 
-// class CartItem extends GoodsItem {
-//   constructor(title, price) {
-//     super(title, price);
-//     this.count = 1;
-//   }
-// }
+Vue.component('goods-item', {
+  props: ['good'],
+  template: '<div class="good-item">\
+    <h3>{{ good.product_name }}</h3>\
+    <p>{{ good.price }}</p>\
+    <button type="button" value="{{ good.id_product }}">Добавить</button>\
+  </div>',
+  methods: {
+    
+  }
+});
 
-// function makeGETRequest(url) {
-//   return new Promise((resole, reject) => {
-//     var xhr;
-//     if (window.XMLHttpRequest) {
-//       xhr = new XMLHttpRequest();
-//     } else if (window.ActiveXObject) {
-//       xhr = new ActiveXObject("Microsoft.XMLHTTP");
-//     }
-//     xhr.onreadystatechange = function () {
-//       if (xhr.readyState === 4) {
-//         if (xhr.status !== 200) {
-//           reject(xhr.responseText);
-//         }
-//         resole(xhr.responseText);
-//       }
-//     }
-//     xhr.open('GET', url, true);
-//     xhr.send(arguments[1]);
-//   })
-// }
+Vue.component('cart-list', {
+  props: ['goods'],
+  template: '<div class="cart-list" >\
+  <h2 class="title">Корзина</h2>\
+  <cart-item v-for="good in goods" :good="good"></cart-item>\
+  </div>'
+})
 
-// // const catalog = new Catalog();
-// // catalog.fetchGoods().then(() => catalog.render());
+Vue.component('cart-item', {
+  props: ['good'],
+  template: '<div class="cart-item">\
+    <span class="name"></span><span class="price">\
+    </span><span class="count">\
+    </span></div><div class="total-info">\
+    <p class="total-price"></p>\
+    <p class="count-goods"></p>\
+    <button type="button" value="{{ good.id_product }}">Удалить</button>\
+  </div>'
+})
 
-// const basket = new Basket();
-// basket.fetchGoods().then(() => {
-//   basket.render();
-//   // basket.addGood(123);
-//   // basket.addGood(456);
-//   // basket.removeGood(123);
-// });
+Vue.component('search-block', {
+  props: ['value', 'clickSearch'],
+  template: '<div class="search-block">\
+  <input type="text" class="goods-search" id="searchInput" :value="value" v-on:input="$emit(\'input\', $event.target.value)"/>\
+  <button class="search-button" type="button" id="searchButton" v-on:click="$emit(\'ololo\')">Искать</button>\
+  </div>'
+})
 
-// // searchButton.addEventListener('click', (e) => {
-// //   const value = searchInput.value;
-// //   catalog.filterGoods(value);
-// // });
+Vue.component('error-massage', {
+  template: '<div class="error-massage">Connection error</div>'
+})
 
 const app = new Vue({
   el: '#app',
   data: {
     goods: [],
     filteredGoods: [],
+    basket: [],
     searchLine: '',
-    isVisibleCart: false
+    isVisibleCart: false,
+    connected: true
   },
   methods: {
     makeGETRequest(url) {
@@ -198,14 +122,22 @@ const app = new Vue({
       const regexp = new RegExp(value, 'i');
       this.filteredGoods = this.goods.filter(good => regexp.test(good.product_name));
     },
-    clickSearch() {
+    clickSearch: function () {
       this.filterGoods(this.searchLine);
+    },
+    isVisibleCartSwap() {
+      this.isVisibleCart = !this.isVisibleCart;
     }
   },
   mounted() {
     this.makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
+      this.connected = true;
       this.goods = JSON.parse(goods);
       this.filteredGoods = JSON.parse(goods);
-    });
+    })
+      .catch((goods) => {
+        this.connected = false;
+        console.log("Error connect");
+      });
   }
 });
