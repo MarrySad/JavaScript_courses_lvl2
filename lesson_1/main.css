@@ -4,7 +4,7 @@ header {
     text-align: end
 }
 
-.cart-button {
+.cart-button, .search-button {
     border: solid 1px black;
     border-radius: 10px;
     background-color: transparent;
@@ -16,12 +16,19 @@ main {
     padding: 20px;
 }
 
-.goods-list {
+.goods-list, .cart-list {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 
 .goods-item {
     border: solid 1px black;
+    margin: 10px;
     padding: 9px;
 }
+
+.cart-price, .cart-count {
+    flex: 0 0 100%;
+    text-align: center;
+  }
