@@ -2,22 +2,43 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js" defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="vue.min.js"></script>
+  <script src="main.js" defer></script>
 </head>
 
 <body>
+  <div id="app">
     <header>
-        <div class="cart-list"></div>
-        <button class="cart-button" type="button">Корзина</button>
+      <input type="text" class="goods-search" id="searchInput" v-model="searchLine" />
+      <button class="search-button" type="button" id="searchButton" @click="clickSearch">Искать</button>
+      <button class="cart-button" type="button">Корзина</button>
     </header>
     <main>
-        <div class="goods-list"></div>
+      <div class="cart-list" v-if="isVisibleCart">
+        <h2>Корзина</h2>
+        <div class="cart-item">
+          <span class="name"></span><span class="price"></span><span class="count"></span>
+        </div>
+        <div class="total-info">
+          <p class="total-price"></p>
+          <p class="count-goods"></p>
+        </div>
+      </div>
+      <h2>Каталог</h2>
+      <div class="goods-list">
+        <div class="zaglushka" v-if="filteredGoods.length == 0">Нет данных</div>
+        <div class="good-item" v-for="good in filteredGoods">
+          <h3>{{ good.product_name }}</h3>
+          <p>{{ good.price }}</p>
+        </div>
+      </div>
     </main>
+  </div>
 </body>
 
 </html>
