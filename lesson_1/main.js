@@ -1,38 +1,7 @@
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API_URL_LOCAL = 'http://127.0.0.1:3000'
 //   calculatePrice() {
 //     return this.goods.reduce((a, b) => a + b.price, 0);
-//   }
-
-//   addGood(id_product) {
-//     let str_json;
-//     let item;
-//     catalog.goods.forEach((good) => {
-//       if (good.id_product == id_product) {
-//         str_json = JSON.stringify(good);
-//         item = good;
-//       }
-//     })
-//     makeGETRequest(`${API_URL}/addToBasket.json`, str_json).then((response) => {
-//       if (JSON.parse(response).result === 1) {
-//         this.goods.push(item);
-//         this.render()
-//       }
-//     });
-//   }
-
-//   removeGood(id_product) {
-//     let str_json;
-//     basket.goods.forEach((good) => {
-//       if (good.id_product == id_product) {
-//         str_json = JSON.stringify(good);
-//       }
-//     })
-//     makeGETRequest(`${API_URL}/deleteFromBasket.json`, str_json).then((response) => {
-//       if (JSON.parse(response).result === 1) {
-//         const indexToDelete = this.goods.findIndex((item) => item.id_product === id_product);
-//         this.render()
-//       }
-//     });
 //   }
 
 Vue.component('goods-list', {
@@ -48,10 +17,20 @@ Vue.component('goods-item', {
   template: '<div class="good-item">\
     <h3>{{ good.product_name }}</h3>\
     <p>{{ good.price }}</p>\
-    <button type="button" value="{{ good.id_product }}">Добавить</button>\
+    <button type="button" value="{{ good }}" @click="addToCart">Добавить</button>\
   </div>',
   methods: {
-    
+    addToCart() {
+      app.makePOSTRequest(`${API_URL_LOCAL}/addToCart`, JSON.stringify(this.good)).then((response) => {
+        console.log(response);
+      })
+        .then(() => {
+          app.getBasket();
+        })
+        .catch((response) => {
+          console.log(`Ошибонька`);
+        })
+    }
   }
 });
 
@@ -66,13 +45,24 @@ Vue.component('cart-list', {
 Vue.component('cart-item', {
   props: ['good'],
   template: '<div class="cart-item">\
-    <span class="name"></span><span class="price">\
-    </span><span class="count">\
-    </span></div><div class="total-info">\
-    <p class="total-price"></p>\
-    <p class="count-goods"></p>\
-    <button type="button" value="{{ good.id_product }}">Удалить</button>\
-  </div>'
+    <span class="name">{{ good.product_name }}</span>\
+    <span class="price">{{ good.price }}</span>\
+    <span class="count">{{ good.quantity }}</span>\
+    <button type="button" value="{{ good }}" @click="deleteFromCart">Удалить</button>\
+  </div>',
+  methods: {
+    deleteFromCart() {
+      app.makePOSTRequest(`${API_URL_LOCAL}/deleteFromBasket`, JSON.stringify(this.good)).then((response) => {
+        console.log(response);
+      })
+        .then(() => {
+          app.getBasket();
+        })
+        .catch((response) => {
+          console.log(`Ошибонька`);
+        })
+    }
+  }
 })
 
 Vue.component('search-block', {
@@ -100,7 +90,7 @@ const app = new Vue({
   methods: {
     makeGETRequest(url) {
       return new Promise((resole, reject) => {
-        var xhr;
+        let xhr;
         if (window.XMLHttpRequest) {
           xhr = new XMLHttpRequest();
         } else if (window.ActiveXObject) {
@@ -118,19 +108,53 @@ const app = new Vue({
         xhr.send();
       })
     },
+
+    makePOSTRequest(url, data) {
+      return new Promise((resole, reject) => {
+        let xhr;
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status !== 200) {
+              reject(xhr.responseText);
+            }
+            resole(xhr.responseText);
+          }
+        }
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.send(data);
+      })
+    },
+
+    getBasket() {
+      this.makeGETRequest(`${API_URL_LOCAL}/getBasket`).then((goods) => {
+        this.basket = JSON.parse(goods);
+      })
+    },
+
     filterGoods(value) {
       const regexp = new RegExp(value, 'i');
       this.filteredGoods = this.goods.filter(good => regexp.test(good.product_name));
     },
+
     clickSearch: function () {
       this.filterGoods(this.searchLine);
     },
+
     isVisibleCartSwap() {
       this.isVisibleCart = !this.isVisibleCart;
+      if (this.isVisibleCart) {
+        this.getBasket();
+      }
     }
   },
   mounted() {
-    this.makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
+    this.makeGETRequest(`${API_URL_LOCAL}/catalogData`).then((goods) => {
       this.connected = true;
       this.goods = JSON.parse(goods);
       this.filteredGoods = JSON.parse(goods);

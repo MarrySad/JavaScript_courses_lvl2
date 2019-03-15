@@ -4,10 +4,10 @@ header {
     text-align: end
 }
 
-.cart-button, .search-button {
+button {
     border: solid 1px black;
     border-radius: 10px;
-    background-color: transparent;
+    background-color: white;
     outline: none;
     cursor: pointer;
 }
@@ -16,10 +16,25 @@ main {
     padding: 20px;
 }
 
-.goods-list, .cart-list {
+.goods-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+.cart-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+}
+
+.cart-item:nth-child(2n) {
+    background-color: #e8d6e8;
 }
 
 .good-item {
@@ -45,4 +60,12 @@ main {
 
 .title {
     width: 100%;
+}
+
+.name {
+    width: 20%;
+}
+
+.price, .count {
+    width: 10%;
 }
