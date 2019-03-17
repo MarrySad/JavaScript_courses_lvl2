@@ -7,8 +7,7 @@
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="style/main.css" />
-  <script src="components/vue.min.js"></script>
-  <script src="components/main.js" defer></script>
+  <script src="dist/build.js" defer></script>
 </head>
 
 <body>
@@ -20,7 +19,7 @@
     <main>
       <cart-list v-if="isVisibleCart" :goods="basket"></cart-list>
       <h2>Каталог</h2>
-      <goods-list v-if="connected" :goods="filteredGoods"></goods-list>
+      <goods_list v-if="connected" :goods="filteredGoods"></goods_list>
       <error-massage v-if="!connected"></error-massage>
     </main>
   </div>
