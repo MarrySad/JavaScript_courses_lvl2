@@ -12,17 +12,16 @@ describe('Функция summ()', () => {
     }),
     it('должна возвращать null при аргументах (null, "2")', () => {
         expect(calc.summ(null, '2')).toBe(null);
-    })
+    }),
     it('должна возвращать undefined при аргументах (5, undefined)', () => {
         expect(calc.summ(5, undefined)).toBe(undefined);
     })
-    
 });
 
 describe('Функция subt()', () => {
     it('должна возвращать 1 при аргументах (3, 2)', () => {
         expect(calc.subt(3, 2)).toBe(1);
-    })
+    }),
     it('должна возвращать -1 при аргументах (-3, -2)', () => {
         expect(calc.subt(-3, -2)).toBe(-1);
     }),
@@ -31,7 +30,7 @@ describe('Функция subt()', () => {
     }),
     it('должна возвращать null при аргументах (null, "2")', () => {
         expect(calc.subt(null, '2')).toBe(null);
-    })
+    }),
     it('должна возвращать undefined при аргументах (5, undefined)', () => {
         expect(calc.subt(5, undefined)).toBe(undefined);
     })
@@ -52,7 +51,7 @@ describe('Функция mult()', () => {
     }),
     it('должна возвращать null при аргументах (null, "2")', () => {
         expect(calc.mult(null, '2')).toBe(null);
-    })
+    }),
     it('должна возвращать undefined при аргументах (5, undefined)', () => {
         expect(calc.mult(5, undefined)).toBe(undefined);
     })
@@ -64,7 +63,7 @@ describe('Функция div()', () => {
     }),
     it('должна возвращать 1.5 при аргументах (3, 2)', () => {
         expect(calc.div(3, 2)).toBe(1.5);
-    })
+    }),
     it('должна возвращать 1.5 при аргументах ("-3", "-2")', () => {
         expect(calc.div('-3', '-2')).toBe(1.5);
     }),
@@ -73,7 +72,7 @@ describe('Функция div()', () => {
     }),
     it('должна возвращать null при аргументах (null, "2")', () => {
         expect(calc.div(null, '2')).toBe(null);
-    })
+    }),
     it('должна возвращать undefined при аргументах (5, undefined)', () => {
         expect(calc.div(5, undefined)).toBe(undefined);
     })
