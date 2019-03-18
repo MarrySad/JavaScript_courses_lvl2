@@ -1,21 +1,20 @@
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-const API_URL_LOCAL = 'http://127.0.0.1:3000';
+//const API_URL_LOCAL = 'http://127.0.0.1:3000';
 
 import Vue from './vue.min.js';
 
-import goods_list from './components/goodsList.vue';
-import goods_item from "./components/goodsItem.vue";
-import cartList from './components/cartList.vue';
-import searchBlock from './components/searchBlock.vue';
-import errorMassage from './components/errorMassage.vue';
+import goods_list from './components/goodsList.js';
+import cartList from './components/cartList.js';
+import searchBlock from './components/searchBlock.js';
+import errorMassage from './components/errorMassage.js';
 
-// Vue.component('goods-list', {
-//   props: ['goods'],
-//   template: '<div class="goods-list">\
-//     <goods-item v-for="good in goods" :good="good"></goods-item>\
-//     <div class="zaglushka" v-if="goods.length == 0">Нет данных</div>\
-//   </div>',
-// });
+Vue.component('goods-list', {
+  props: ['goods'],
+  template: '<div class="goods-list">\
+    <goods-item v-for="good in goods" :good="good"></goods-item>\
+    <div class="zaglushka" v-if="goods.length == 0">Нет данных</div>\
+  </div>',
+});
 
 // Vue.component('goods-item', {
 //   props: ['good'],
@@ -85,6 +84,7 @@ import errorMassage from './components/errorMassage.vue';
 const app = new Vue({
   el: '#app',
   data: {
+    API_URL_LOCAL: 'http://127.0.0.1:3000',
     goods: [],
     filteredGoods: [],
     basket: [],
@@ -94,7 +94,6 @@ const app = new Vue({
   },
   components: {
     goods_list,
-    goods_item,
     cartList,
     searchBlock,
     errorMassage
@@ -144,7 +143,7 @@ const app = new Vue({
     },
 
     getBasket() {
-      this.makeGETRequest(`${API_URL_LOCAL}/getBasket`).then((goods) => {
+      this.makeGETRequest(`${this.API_URL_LOCAL}/getBasket`).then((goods) => {
         this.basket = JSON.parse(goods);
       })
     },
@@ -166,7 +165,7 @@ const app = new Vue({
     }
   },
   mounted() {
-    this.makeGETRequest(`${API_URL_LOCAL}/catalogData`).then((goods) => {
+    this.makeGETRequest(`${this.API_URL_LOCAL}/catalogData`).then((goods) => {
       this.connected = true;
       this.goods = JSON.parse(goods);
       this.filteredGoods = JSON.parse(goods);
@@ -177,3 +176,9 @@ const app = new Vue({
       });
   }
 });
+
+export default {
+  API_URL: app.API_URL_LOCAL,
+  makePOSTRequest: app.makePOSTRequest,
+  getBasket: app.getBasket
+}
